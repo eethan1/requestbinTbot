@@ -1,0 +1,31 @@
+const beautify = require('json-beautify');
+var request = require('request');
+
+function empty(name) {
+    console.log(`config.json ${name} cannot be empty!`);
+    process.exit(-1);
+}
+module.exports = {
+    tbot:{
+        key : '' || empty('tbot.key'),  // bot api key
+        params : {
+            chat_id:'' || empty('tbot.params.char_id'), // chat room id
+            text:'',
+            parse_mode:'HTML'
+        },
+        sendMsg : function(msg) {
+            this.params.text = beautify(msg,null,2,100);
+            console.log(this.params);
+            request({
+                method: 'POST',
+                url:`https://api.telegram.org/bot${this.key}/sendMessage`,
+                json:this.params
+            },
+                function(err, res, body){
+                    if(err) console.log(err);
+                    else console.log(body);
+            });
+        }
+    },
+    admin_key:'' || empty('tbot.params.char_id') 'admin password hash'
+}
