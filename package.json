@@ -1,0 +1,28 @@
+{
+  "name": "requestbintbot",
+  "version": "1.0.0",
+  "description": "Just like Request bin, but send message to telegram bot",
+  "main": "index.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-group-routes": "^1.1.0",
+    "express-remove-route": "^1.0.0",
+    "json-beautify": "^1.1.1",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eethan1/requestbinTbot.git"
+  },
+  "author": "eethan1",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eethan1/requestbinTbot/issues"
+  },
+  "homepage": "https://github.com/eethan1/requestbinTbot#readme"
+}
