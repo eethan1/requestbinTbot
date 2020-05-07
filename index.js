@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 const {retarg, retdata} = require('./controlfactor');
 
 app.use(cookieParser());
-var {tbot} = require('./config.js');
+var {tbot,host,port} = require('./config.js');
 var admin = require('./admin.js');
 
 app.all('/delay/:t', async function(req, res) {
@@ -44,8 +44,8 @@ app.use(/^\/$/,function(req, res) {
 });
 
 function startServer(){
-    console.log('start server: 0.0.0.0:7126');
-    app.listen(7126,'0.0.0.0');
+    console.log(`start server: ${host}:${port}`);
+    app.listen(port,host);
 }
 
 if(require.main === module) {

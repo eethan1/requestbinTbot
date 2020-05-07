@@ -27,5 +27,7 @@ module.exports = {
             });
         }
     },
-    admin_key:'' || empty('tbot.params.char_id') 'admin password hash'
+    admin_key:'' || empty('admin_key'), // admin password hash
+    host:'127.0.0.1',
+    port:'7126'
 }
