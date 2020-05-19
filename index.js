@@ -1,10 +1,16 @@
 var express = require('express');
 var app = express();
 var cookieParser = require('cookie-parser');
+var cors = require('cors');
 const {retarg, retdata} = require('./controlfactor');
-app.use(cookieParser());
 var {tbot,host,port} = require('./config.js');
 var admin = require('./admin.js');
+
+
+
+
+app.use(cors());
+app.use(cookieParser());
 app.use(require('body-parser')({ extended: true }));
 app.use(function(req ,res, next) {
     console.log(`${req.method} ${req.originalUrl} from ${req.ip}`);
@@ -54,6 +60,8 @@ app.all(['/favicon','/favicon.ico'], function(req, res){
 });
 
 app.use(admin);
+
+app.use(express.static('./public'));
 
 app.all('*', function(req, res) {
     retdata.merge(req.query._ret);
