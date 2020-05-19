@@ -3,7 +3,7 @@ var retdata = {
     'header' : true,
     'cookie' : true,
     'body'   : false,
-    'url'    : false,
+    'url'    : true,
 }
 var retarg = {
     '301'   : '/',
