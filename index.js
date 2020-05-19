@@ -6,6 +6,10 @@ app.use(cookieParser());
 var {tbot,host,port} = require('./config.js');
 var admin = require('./admin.js');
 app.use(require('body-parser')({ extended: true }));
+app.use(function(req ,res, next) {
+    console.log(`${req.method} ${req.originalUrl} from ${req.ip}`);
+    next();
+});
 app.all('/delay/:t', async function(req, res) {
     await setTimeout(
         function() {
@@ -33,7 +37,7 @@ app.get('/tmp/reset', function(req, res) {
 });
 app.get('/tmp', function(req, res) {
     res.set('Content-Type', retarg.content_type);
-    res.send(tmpfile+'<form method=POST actoin="/tmp"><textarea name="content"> </textarea><input type="submit"></form>').end();
+    res.send(tmpfile+'<form method=POST actoin="/tmp"><textarea rows=40 cols=100 name="content"> </textarea><input type="submit"></form>').end();
 });
 
 
@@ -45,7 +49,7 @@ app.post('/tmp', function(req, res) {
 
 
 
-app.all('/favicon', function(req, res){
+app.all(['/favicon','/favicon.ico'], function(req, res){
     return res.sendStatus(404);
 });
 
