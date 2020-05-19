@@ -36,7 +36,7 @@ app.all('/favicon', function(req, res){
 
 app.use(admin);
 
-app.use(/^\/$/,function(req, res) {
+app.all('/', function(req, res) {
     retdata.merge(req.query._ret);
     let data = retdata.retrieve(req);
     tbot.sendMsg(data);
