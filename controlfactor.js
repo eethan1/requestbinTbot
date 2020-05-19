@@ -10,6 +10,7 @@ var retarg = {
     '302'   : '/',
     '307'   : '/',
     'delay' : '/',
+    content_type: 'text/html'
 }
 function deepTrans(obj) {
     let data = {};
