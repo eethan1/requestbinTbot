@@ -37,19 +37,25 @@ app.all('/307', function(req, res){
 });
 
 var tmpfile;
-app.get('/tmp/reset', function(req, res) {
+app.get('/tmp/reset',admin.authMiddleware, function(req, res) {
     tmpfile = '';
     res.send('alright'+'<script>location.href="/tmp"</script>');
 });
 app.get('/tmp', function(req, res) {
-    res.set('Content-Type', retarg.content_type);
-    res.send(tmpfile+'<form method=POST actoin="/tmp"><textarea rows=40 cols=100 name="content"> </textarea><input type="submit"></form>').end();
+    if(req.cookies.tmpfile) {
+        res.set('Content-Type', retarg.content_type);
+        res.send(req.cookies.tmpfile+'<form method=POST actoin="/tmp"><textarea rows=40 cols=100 name="content"> </textarea><input type="submit"></form>').end();
+    }else{
+        res.set('Content-Type', retarg.content_type);
+        res.send(tmpfile+'<form method=POST actoin="/tmp"><textarea rows=40 cols=100 name="content"> </textarea><input type="submit"></form>').end();
+    }
+    
 });
 
 
-app.post('/tmp', function(req, res) {
+app.post('/tmp', admin.authMiddleware, function(req, res) {
     tmpfile = req.body.content;
-    res.send('ok');
+    res.send('ok'+'<script>location.href="/tmp"</script>');
 });
 
 
@@ -59,7 +65,7 @@ app.all(['/favicon','/favicon.ico'], function(req, res){
     return res.sendStatus(404);
 });
 
-app.use(admin);
+app.use(admin.route);
 
 app.use(express.static('./public'));
 

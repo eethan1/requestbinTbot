@@ -4,6 +4,13 @@ var {admin_key} = require('./config.js');
 const crypto = require('crypto');
 var {retarg, retdata} = require('./controlfactor');
 var {tbot} = require('./config.js');
+
+function checkAuth(a,pass) {
+    console.log(`Try login with ${a}`);
+    let tmp = crypto.createHash('md5').update(a).digest('hex')
+    return  crypto.createHash('md5').update(tmp).digest('hex') === pass;
+}
+
 function auth(req, res, next) {
     let pass = req.cookies._jizz;
     console.log(pass);
@@ -11,11 +18,7 @@ function auth(req, res, next) {
         res.status(403);
         return res.send('Jizz');
     }
-    let tmp = crypto.createHash('md5').update(pass).digest('hex');
-    let h = crypto.createHash('md5').update(tmp).digest('hex');
-    console.log(h);
-    console.log(admin_key);
-    if(h !== admin_key) {
+    if(!checkAuth(pass,admin_key)) {
         retdata.merge(req.query._ret);
         let data = retdata.retrieve(req);
         tbot.sendMsg(data);
@@ -50,4 +53,8 @@ admin.get('/reset', auth,function(req, res) {
     process.exit(0);
 });
 
-module.exports = admin;
+module.exports = {
+    route:admin,
+    authMiddleware: auth,
+    checkAuth: checkAuth
+}
